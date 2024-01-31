@@ -13,7 +13,7 @@ import 'package:project_two/register.dart';
 import 'package:project_two/wishlist.dart';
 void main() {
   runApp(MaterialApp(
-    home: ChangePassword(),
+    home: Category(),
   ));
 }
 class Dashboard extends StatelessWidget {

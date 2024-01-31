@@ -1,14 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:http/http.dart' as http;
 import 'custom_widget.dart';
-
 class Category extends StatefulWidget {
   @override
   State<Category> createState() => _CategoryState();
 }
 
 class _CategoryState extends State<Category> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    SendRequest();
+  }
+
+  Future<void> SendRequest() async {
+      String ApiAddress = "http://www.theeasylearnacademy.com/shop/ws/category.php";
+      var url = Uri.parse(ApiAddress);
+      var response = await http.get(url);
+      print(response.statusCode);
+      print(response.body);
+  }
   @override
   Widget build(BuildContext context) {
     return Material(
