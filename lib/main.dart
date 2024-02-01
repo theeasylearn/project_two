@@ -11,10 +11,9 @@ import 'package:project_two/product.dart';
 import 'package:project_two/product_detail.dart';
 import 'package:project_two/register.dart';
 import 'package:project_two/wishlist.dart';
-void main() {
-  runApp(MaterialApp(
-    home: Category(),
-  ));
+import 'package:overlay_support/overlay_support.dart';
+void  main() {
+  runApp(OverlaySupport.global(child: MaterialApp(home: Category())));
 }
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
