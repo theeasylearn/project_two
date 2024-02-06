@@ -20,46 +20,48 @@ class _CategoryState extends State<Category> {
   }
 
   Future<void> SendRequest() async {
-      String ApiAddress = "http://www.theeasylearnacademy.com/shop/ws/category.php";
-      var url = Uri.parse(ApiAddress);
+    String ApiAddress = "http://www.theeasylearnacademy.com/shop/ws/category.php";
+    var url = Uri.parse(ApiAddress);
+    try
+    {
       var response = await http.get(url);
       print(response.statusCode);
       print(response.body);
-      /*
-      [
-      0 {"error":"no"},
-      1 {"total":7},
-      2 {"id":"195","title":"my category","photo":"Namkeen Mart.png","islive":"1","isdeleted":"0"},
-      3 {"id":"1","title":"farsan","photo":"farsan.jpg","islive":"1","isdeleted":"0"},
-      {"id":"2","title":"wafers","photo":"wafers.jpg","islive":"1","isdeleted":"0"},
-      {"id":"3","title":"chocolate","photo":"chocolate.jpg","islive":"1","isdeleted":"0"},
-      {"id":"4","title":"biscuit","photo":"biscuit.jpg","islive":"1","isdeleted":"0"},
-      {"id":"5","title":"pickles","photo":"pickles.jpg","islive":"1","isdeleted":"0"},
-      {"id":"6","title":"sweets","photo":"sweets.jpg","islive":"1","isdeleted":"0"}]
-       */
-      //convert to json
-      var data = json.decode(response.body);
-      print(data[0]['error']);
-      print(data[1]['total']);
-      print(data[2]['title'] + " " + data[2]['photo'] + " " + data[2]['id']);
-      if(data[0]['error'] != 'no')
-      {
-        toast(data[0]['error']);
-      }
-      else if(data[1]['total']==0)
-      {
-        toast("No category found");
-      }
-      else
-      {
-           print("we have no error");
-           data.remove(0);
-           data.remove(0);
-           setState(() {
+
+      try {
+        var data = json.decode(response.body);
+        print(data);
+
+          // Parsing successful
+          print(data[0]['error']);
+          print(data[1]['total']);
+          print(data[2]['title'] + " " + data[2]['photo'] + " " + data[2]['id']);
+
+          if (data[0]['error'] != 'no') {
+            toast(data[0]['error']);
+          } else if (data[1]['total'] == 0) {
+            toast("No category found");
+          } else {
+            print("We have no error");
+            data.removeAt(0);
+            data.removeAt(0);
+
+            setState(() {
               categories = data;
-           });
+            });
+          }
+      } catch (e) {
+        // Handle JSON decoding exception
+        print("Error decoding JSON: $e");
+        toast("oops, something went wrong, please contact administrator...");
       }
+    } catch (e) {
+      // Handle HTTP request exception
+      print("Error making HTTP request: $e");
+      toast("Error making HTTP request");
+    }
   }
+
   @override
   Widget build(BuildContext context) {
     return Material(
