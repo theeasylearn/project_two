@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:http/http.dart' as http;
 import 'package:project_two/dashboard.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class Login extends StatefulWidget {
   @override
   State<Login> createState() => _LoginState();
@@ -15,6 +15,7 @@ class _LoginState extends State<Login> {
   TextEditingController EmailController = new TextEditingController();
   TextEditingController PasswordController = new TextEditingController();
   String email = '', password = '';
+  FlutterSecureStorage storage = new FlutterSecureStorage();
   @override
   void initState() {
     // TODO: implement initState
@@ -161,6 +162,8 @@ class _LoginState extends State<Login> {
                  toast(message);
                  if(success=='yes')
                  {
+                   //store id of the user into storage so that it can be used in future
+                    storage.write(key: 'userid', value: data[3]['id']);
                     // Navigator.push(context,new MaterialPageRoute(builder: (context)=> Dashboard()));
                    Get.to(Dashboard());
                  }
