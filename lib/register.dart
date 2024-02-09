@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:http/http.dart' as http;
+
+import 'login.dart';
 
 class Register extends StatefulWidget {
   Register({super.key});
@@ -138,7 +141,7 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  void SendRequest() {
+  Future<void> SendRequest() async {
     String apiAddress =
         "http://www.theeasylearnacademy.com/shop/ws/register.php";
     Map<String, Object> form = new Map();
@@ -147,15 +150,34 @@ class _RegisterState extends State<Register> {
     form['mobile'] = mobile;
     //call api
     try {
-      var response = http.post(Uri.parse(apiAddress), body: form);
+      var response = await http.post(Uri.parse(apiAddress), body: form);
       print(response);
-      /*
-      1) [{"error":"input is missing"}]
+      //convert response into json
+      try {
+        var data = json.decode(response.body);
+        /*
+        1) [{"error":"input is missing"}]
         2) [{"error":"no"},{"success":"yes"},{"message":"registered successfully"}]
         3) [{"error":"no"},{"success":"no"},{"message":"email or mobile is already registered with us"}]
        */
+        //create variable to store info about error
+        String error = data[0]['error'];
+        if(error != 'no')
+          toast(error);
+        else
+        {
+            String success = data[1]['success'];
+            String message = data[2]['message'];
+            toast(message);
+            if(success == 'yes')
+              Get.to(Login());
+        }
+      } catch (error) {
+        toast("oops, something went wrong, please contact administrator...");
+        print(error);
+      }
     } catch (error) {
-      print("Error decoding JSON: $e");
+      print("Error decoding JSON: $error");
       toast("oops, something went wrong, please contact administrator...");
     }
   }

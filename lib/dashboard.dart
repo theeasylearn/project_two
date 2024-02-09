@@ -148,7 +148,6 @@ class Dashboard extends StatelessWidget {
                             children: [
                               Image.asset("assets/check-out.png"),
                               FittedText("Checkout",Color(0xff651446),45),
-
                             ],
                           ),
                         ),
@@ -159,16 +158,17 @@ class Dashboard extends StatelessWidget {
                             color: Color(0xfff6d2e8),
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset("assets/forgot-password.png"),
-                              Column(
-                                children: [
-                                  FittedText("Forgot password",Color(0xff651446),45),
-                                ],
-                              ),
-                            ],
+                          child: InkWell(
+                            onTap: (){
+
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset("assets/change_password_icon.png"),
+                                FittedText("Change password",Color(0xff651446),45),
+                              ],
+                            ),
                           ),
                         ),
                       ],
