@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_two/change_password.dart';
 import 'package:project_two/custom_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -160,7 +161,7 @@ class Dashboard extends StatelessWidget {
                           ),
                           child: InkWell(
                             onTap: (){
-
+                                Navigator.push(context,MaterialPageRoute(builder: (context) => ChangePassword()));
                             },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
