@@ -14,5 +14,5 @@ import 'package:project_two/register.dart';
 import 'package:project_two/wishlist.dart';
 import 'package:overlay_support/overlay_support.dart';
 void  main() {
-  runApp(OverlaySupport.global(child: GetMaterialApp(home: Register())));
+  runApp(OverlaySupport.global(child: GetMaterialApp(home: Category())));
 }

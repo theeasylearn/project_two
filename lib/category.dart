@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:overlay_support/overlay_support.dart';
+import 'package:project_two/product.dart';
 import 'custom_widget.dart';
 import 'dart:convert';
 class Category extends StatefulWidget {
@@ -12,6 +14,7 @@ class Category extends StatefulWidget {
 class _CategoryState extends State<Category> {
   //list
   var categories = []; //empty list
+  FlutterSecureStorage storage = new FlutterSecureStorage();
   @override
   void initState() {
     // TODO: implement initState
@@ -82,17 +85,23 @@ class _CategoryState extends State<Category> {
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3, childAspectRatio: 0.61),
             itemBuilder: (context, index) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Image.network("http://theeasylearnacademy.com/shop/images/category/" + categories[index]['photo']),
-                  Container(
-                  alignment: Alignment.center,
-                  color: Color(0xff651446),
-                    padding: EdgeInsets.all(08),
-                    child:   MyText(categories[index]['title'],Colors.white),
-                  )
-                ],
+              return InkWell(
+                onTap: () {
+                    storage.write(key: 'categoryid', value: categories[index]['id']);
+                    Navigator.push(context,new MaterialPageRoute(builder: (context) => Product()));
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Image.network("http://theeasylearnacademy.com/shop/images/category/" + categories[index]['photo']),
+                    Container(
+                    alignment: Alignment.center,
+                    color: Color(0xff651446),
+                      padding: EdgeInsets.all(08),
+                      child:   MyText(categories[index]['title'],Colors.white),
+                    )
+                  ],
+                ),
               );
             }),
       ),
