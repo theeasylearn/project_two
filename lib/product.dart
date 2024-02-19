@@ -5,6 +5,8 @@ import 'package:overlay_support/overlay_support.dart';
 import 'package:project_two/custom_widget.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import 'package:project_two/product_detail.dart';
 class Product extends StatefulWidget {
   @override
   State<Product> createState() => _ProductState();
@@ -22,8 +24,6 @@ class _ProductState extends State<Product>
     storage.read(key: 'categoryid').then((categoryid){
           SendRequest(categoryid);
     });
-
-
   }
   Future<void> SendRequest(String? categoryid) async
   {
@@ -71,14 +71,20 @@ class _ProductState extends State<Product>
           SliverGrid(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            childAspectRatio: 0.40
+            childAspectRatio: 0.50
           ),delegate: SliverChildBuilderDelegate((context,index)
           {
               return InkWell(
+                onTap: (){
+                  Navigator.push(context,new MaterialPageRoute(builder: (context) => new ProductDetail(product[index]['id'])));
+                },
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                        Image.network("http://www.theeasylearnacademy.com/shop/images/product/" + product[index]['photo']),
+                        Expanded(child:
+                        Image.network("http://www.theeasylearnacademy.com/shop/images/product/" + product[index]['photo'],
+                        fit: BoxFit.cover,)
+                        ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(

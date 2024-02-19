@@ -93,7 +93,10 @@ class _CategoryState extends State<Category> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Image.network("http://theeasylearnacademy.com/shop/images/category/" + categories[index]['photo']),
+                    Expanded(child:
+                    Image.network("http://theeasylearnacademy.com/shop/images/category/" + categories[index]['photo']
+                    ,fit: BoxFit.cover,
+                    )),
                     Container(
                     alignment: Alignment.center,
                     color: Color(0xff651446),
