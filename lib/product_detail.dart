@@ -30,10 +30,10 @@ class _ProductDetailState extends State<ProductDetail> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    SendRequest();
+    FetchProductDetailFromServer();
   }
 
-  Future<void> SendRequest() async
+  Future<void> FetchProductDetailFromServer() async
   {
     // api call
     String ApiAddress = Common.getBase() + "?productid=$productid";
@@ -122,7 +122,8 @@ class _ProductDetailState extends State<ProductDetail> {
                   InkWell(
                     onTap: (){
                       //call api to add product into cart
-
+                      print("AddtoCart called....");
+                      AddtoCart();
                     },
                     child: Container(
                       padding: EdgeInsets.all(10),
@@ -137,7 +138,8 @@ class _ProductDetailState extends State<ProductDetail> {
                   InkWell(
                     onTap: (){
                       //call api to add product into wishlist
-                      AddtoCart();
+                      print("AddtoWishList called....");
+                      AddtoWishList();
                     },
                     child: Container(
                       width: 120,
@@ -158,9 +160,36 @@ class _ProductDetailState extends State<ProductDetail> {
   }
 
   void AddtoCart() {
-    storage.read(key: "userid").then((value) => (){
+    storage.read(key: "userid").then((value){
+      print("AddtoCart value will be fetched from storage");
         String apiAddress = Common.getBase() + "add_to_cart.php?productid=$productid&usersid=$value";
+        SendRequest(apiAddress);
       });
-
+  }
+  void AddtoWishList() {
+    print("AddTowishlist value will be fetched from storage");
+    storage.read(key: "userid").then((value){
+      String apiAddress = Common.getBase() + "add_to_wishlist.php?productid=$productid&usersid=$value";
+      SendRequest(apiAddress);
+    });
+  }
+  Future<void> SendRequest(String apiAddress) async
+  {
+      print(apiAddress);
+      var response = await http.get(Uri.parse(apiAddress));
+      print(response.body);
+      //convert it to json
+      var data = json.decode(response.body);
+      //create error variable
+      String error = data[0]['error'];
+      if(error !='no')
+      {
+          toast(error);
+      }
+      else
+      {
+          String message = data[1]['message'];
+          toast(message);
+      }
   }
 }

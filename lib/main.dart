@@ -13,6 +13,8 @@ import 'package:project_two/product_detail.dart';
 import 'package:project_two/register.dart';
 import 'package:project_two/wishlist.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:project_two/dashboard.dart';
+
 void  main() {
-  runApp(OverlaySupport.global(child: GetMaterialApp(home: Category())));
+  runApp(OverlaySupport.global(child: GetMaterialApp(home: Dashboard())));
 }

@@ -1,10 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:project_two/cart.dart';
 import 'package:project_two/change_password.dart';
+import 'package:project_two/checkout.dart';
 import 'package:project_two/custom_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project_two/wishlist.dart';
+
+import 'category.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
+  void _navigateToScreen(BuildContext context, Widget screen) {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => screen,
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(-1.0, 0.0);
+          const end = Offset.zero;
+          const curve = Curves.easeInOutQuart;
+          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+          var offsetAnimation = animation.drive(tween);
+          return SlideTransition(position: offsetAnimation, child: child);
+        },
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -58,34 +81,44 @@ class Dashboard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          height: (constraints.maxHeight - 32) / 3,
-                          width: (constraints.maxWidth - 4) / 2,
-                          decoration: BoxDecoration(
-                            color: Color(0xfff6d2e8),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset("assets/store.png"),
-                              FittedText("Shop",Color(0xff651446),45),
-                            ],
+                        InkWell(
+                          onTap: () {
+                              _navigateToScreen(context, Category());
+                          },
+                          child: Container(
+                            height: (constraints.maxHeight - 32) / 3,
+                            width: (constraints.maxWidth - 4) / 2,
+                            decoration: BoxDecoration(
+                              color: Color(0xfff6d2e8),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset("assets/store.png"),
+                                FittedText("Shop", Color(0xff651446), 45),
+                              ],
+                            ),
                           ),
                         ),
-                        Container(
-                          height: (constraints.maxHeight - 32) / 3,
-                          width: (constraints.maxWidth - 4) / 2,
-                          decoration: BoxDecoration(
-                            color: Color(0xfff6d2e8),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset("assets/categories.png"),
-                              FittedText("Categries",Color(0xff651446),45),
-                            ],
+                        InkWell(
+                          onTap: () {
+                            // Add your onTap functionality here
+                          },
+                          child: Container(
+                            height: (constraints.maxHeight - 32) / 3,
+                            width: (constraints.maxWidth - 4) / 2,
+                            decoration: BoxDecoration(
+                              color: Color(0xfff6d2e8),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset("assets/categories.png"),
+                                FittedText("History", Color(0xff651446), 45),
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -97,35 +130,47 @@ class Dashboard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          height: (constraints.maxHeight - 32) / 3,
-                          width: (constraints.maxWidth - 4) / 2,
-                          decoration: BoxDecoration(
-                            color: Color(0xfff6d2e8),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset("assets/trolley.png"),
-                              FittedText("Cart",Color(0xff651446),45),
-                            ],
+                        InkWell(
+                          onTap: () {
+                            // Add your onTap functionality here
+                            _navigateToScreen(context, Cart());
+
+                          },
+                          child: Container(
+                            height: (constraints.maxHeight - 32) / 3,
+                            width: (constraints.maxWidth - 4) / 2,
+                            decoration: BoxDecoration(
+                              color: Color(0xfff6d2e8),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset("assets/trolley.png"),
+                                FittedText("Cart", Color(0xff651446), 45),
+                              ],
+                            ),
                           ),
                         ),
-                        Container(
-                          height: (constraints.maxHeight - 32) / 3,
-                          width: (constraints.maxWidth - 4) / 2,
-                          decoration: BoxDecoration(
-                            color: Color(0xfff6d2e8),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset("assets/shopping-cart.png"),
-                              FittedText("Wishlist",Color(0xff651446),45),
-
-                            ],
+                        InkWell(
+                          onTap: () {
+                            // Add your onTap functionality here
+                            _navigateToScreen(context, Wishlist());
+                          },
+                          child: Container(
+                            height: (constraints.maxHeight - 32) / 3,
+                            width: (constraints.maxWidth - 4) / 2,
+                            decoration: BoxDecoration(
+                              color: Color(0xfff6d2e8),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset("assets/shopping-cart.png"),
+                                FittedText("Wishlist", Color(0xff651446), 45),
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -137,37 +182,44 @@ class Dashboard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          height: (constraints.maxHeight - 32) / 3,
-                          width: (constraints.maxWidth - 4) / 2,
-                          decoration: BoxDecoration(
-                            color: Color(0xfff6d2e8),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset("assets/check-out.png"),
-                              FittedText("Checkout",Color(0xff651446),45),
-                            ],
+                        InkWell(
+                          onTap: () {
+                            // Add your onTap functionality here
+                            _navigateToScreen(context, Checkout());
+
+                          },
+                          child: Container(
+                            height: (constraints.maxHeight - 32) / 3,
+                            width: (constraints.maxWidth - 4) / 2,
+                            decoration: BoxDecoration(
+                              color: Color(0xfff6d2e8),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset("assets/check-out.png"),
+                                FittedText("Checkout", Color(0xff651446), 45),
+                              ],
+                            ),
                           ),
                         ),
-                        Container(
-                          height: (constraints.maxHeight - 32) / 3,
-                          width: (constraints.maxWidth - 4) / 2,
-                          decoration: BoxDecoration(
-                            color: Color(0xfff6d2e8),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: InkWell(
-                            onTap: (){
-                                Navigator.push(context,MaterialPageRoute(builder: (context) => ChangePassword()));
-                            },
+                        InkWell(
+                          onTap: () {
+                            _navigateToScreen(context, ChangePassword());
+                          },
+                          child: Container(
+                            height: (constraints.maxHeight - 32) / 3,
+                            width: (constraints.maxWidth - 4) / 2,
+                            decoration: BoxDecoration(
+                              color: Color(0xfff6d2e8),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Image.asset("assets/change_password_icon.png"),
-                                FittedText("Change password",Color(0xff651446),45),
+                                FittedText("Change password", Color(0xff651446), 45),
                               ],
                             ),
                           ),
