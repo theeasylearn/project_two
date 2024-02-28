@@ -165,7 +165,7 @@ class _LoginState extends State<Login> {
                    //store id of the user into storage so that it can be used in future
                     storage.write(key: 'userid', value: data[3]['id']);
                     // Navigator.push(context,new MaterialPageRoute(builder: (context)=> Dashboard()));
-                   Get.to(Dashboard());
+                   Get.offAll(Dashboard());
                  }
             }
           }

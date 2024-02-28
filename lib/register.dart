@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:http/http.dart' as http;
@@ -21,6 +22,7 @@ class _RegisterState extends State<Register> {
   TextEditingController MobileController = new TextEditingController();
 
   String email = '', password = '', mobile = '', confirmpassword = '';
+  FlutterSecureStorage storage = new FlutterSecureStorage();
 
   @override
   void initState() {
@@ -170,7 +172,11 @@ class _RegisterState extends State<Register> {
             String message = data[2]['message'];
             toast(message);
             if(success == 'yes')
-              Get.to(Login());
+            {
+              //create variable that keeps information about user registration status
+              storage.write(key: 'userid', value:'-1');
+              Get.offAll(Login());
+            }
         }
       } catch (error) {
         toast("oops, something went wrong, please contact administrator...");
