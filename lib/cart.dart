@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
+import 'package:overlay_support/overlay_support.dart';
 import 'custom_widget.dart';
+import 'common_functions.dart';
+import 'dart:convert';
 
 class Cart extends StatefulWidget {
   @override
@@ -9,6 +13,41 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
+  FlutterSecureStorage storage = new FlutterSecureStorage();
+  var cart = []; //empty list
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getItemsFromCart();
+  }
+  Future<void> getItemsFromCart() async
+  {
+    storage.read(key:'userid').then((id) async {
+      String ApiAddress = Common.getBase() + "cart.php?usersid=$id";
+      var response = await http.get(Uri.parse(ApiAddress));
+      print(response.body);
+      var data = json.decode(response.body);
+      print(data);
+      String error = data[0]['error'];
+      if(error != 'no')
+        toast(error);
+      else if(data[0]['total'] == 0)
+      {
+          toast("cart is empty");
+      }
+      else
+      {
+        //delete 1st 2 items
+        data.removeAt(0);
+        data.removeAt(0);
+        setState(() {
+            cart = data;
+        });
+      }
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +78,7 @@ class _CartState extends State<Cart> {
           child: Container(
             height: 725,
             child: ListView.builder(
-                itemCount: 5,
+                itemCount: cart.length,
                 itemBuilder: (context, index) {
               return Container(
                 height: 250,
@@ -48,25 +87,24 @@ class _CartState extends State<Cart> {
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Image.network("https://loremflickr.com/150/150"),
+                        Image.network("https://theeasylearnacademy.com/shop/images/product/" +
+                            cart[index]['photo']),
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              FittedText("Product - 1", Colors.black, 25),
+                              FittedText(cart[index]['title'], Colors.black, 25),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  FittedText("2500", Colors.black, 20),
-                                  FittedText("x 2", Colors.black, 20),
-                                  FittedText("=5000", Colors.black, 20),
+                                  FittedText(cart[index]['price'], Colors.black, 20),
+                                  FittedText("x " + cart[index]['quantity'], Colors.black, 20),
+                                  FittedText("=" + (int.parse(cart[index]['price']) * int.parse(cart[index]['quantity'])).toString(), Colors.black, 20),
                                 ],
                               ),
                               SizedBox(
                                 width: 200,
-                                child: Text("Product Description goes here. "
-                                    "\n it can be many lines. and provide detail "
-                                    "\n about product"),
+                                child: Text(cart[index]['detail']),
                               ),
                               SizedBox(
                                 height: 10,
