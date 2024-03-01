@@ -84,16 +84,22 @@ class _CartState extends State<Cart> {
                 height: 250,
                 width: double.infinity,
                 child: Card(
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Image.network("https://theeasylearnacademy.com/shop/images/product/" +
-                            cart[index]['photo']),
-                        Column(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Image.network(
+                            "https://theeasylearnacademy.com/shop/images/product/" + cart[index]['photo'],
+                            fit: BoxFit.cover,
+                            height: constraints.maxHeight, // Set the height to match the parent Card
+                            width: constraints.maxWidth * 0.5, // Adjust the width as needed
+                          ),
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              FittedText(cart[index]['title'], Colors.black, 25),
+                              FittedText(cart[index]['title'], Colors.black,18),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
@@ -103,14 +109,14 @@ class _CartState extends State<Cart> {
                                 ],
                               ),
                               SizedBox(
-                                width: 200,
-                                child: Text(cart[index]['detail']),
+                                width: constraints.maxWidth * 0.5,
+                                child: Text(cart[index]['detail'].toString().substring(0,100) + "..."),
                               ),
                               SizedBox(
                                 height: 10,
                               ),
                               SizedBox(
-                                width: 180,
+                                width: constraints.maxWidth * 0.5,
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
@@ -136,13 +142,16 @@ class _CartState extends State<Cart> {
                                     ),
                                   ],
                                 ),
-                              )
-                            ]),
-                      ]
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
               );
-            }),
+                }),
           )
       ),
     );

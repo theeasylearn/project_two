@@ -211,7 +211,8 @@ class _ChangePasswordState extends State<ChangePassword> {
             toast(message);
             if(success == 'yes')
             {
-                Get.to(Login());                 //send user on login screen
+                Get.to(Login());
+                //send user on login screen
             }
           }
         } catch (error) {
