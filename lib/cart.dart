@@ -14,6 +14,7 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   FlutterSecureStorage storage = new FlutterSecureStorage();
+  var userid;
   var cart = []; //empty list
   @override
   void initState() {
@@ -24,6 +25,7 @@ class _CartState extends State<Cart> {
   Future<void> getItemsFromCart() async
   {
     storage.read(key:'userid').then((id) async {
+      userid = id;
       String ApiAddress = Common.getBase() + "cart.php?usersid=$id";
       var response = await http.get(Uri.parse(ApiAddress));
       print(response.body);
@@ -118,28 +120,24 @@ class _CartState extends State<Cart> {
                               SizedBox(
                                 width: constraints.maxWidth * 0.5,
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    CircleAvatar(
-                                      child: Icon(Icons.add),
-                                    ),
-                                    Container(
-                                      height: 40,
-                                      width: 80,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                          color: Color(0xff6c164b),
-                                          borderRadius: BorderRadius.circular(30)
-                                      ),
-                                      child: Text("0",style: GoogleFonts.titilliumWeb(
-                                        textStyle: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.white,
-                                        ),),),
-                                    ),
-                                    CircleAvatar(
-                                      child: Icon(Icons.remove),
-                                    ),
+                                    ElevatedButton(child: Text("Send to Wishlist"),
+                                      onPressed: () {
+                                          String apiAddress =
+                                              "https://www.theeasylearnacademy.com/shop/ws/move_to_wishlist.php?usersid="
+                                              + userid + "&productid= " + cart[index]['productid'];
+                                          SendRequest(apiAddress);
+
+                                      },),
+                                    ElevatedButton(child: Text("Trash"),
+                                      onPressed: () {
+                                        String apiAddress =
+                                            "https://www.theeasylearnacademy.com/shop/ws/delete_from_cart.php?cartid="
+                                                 + cart[index]['id'];
+                                        SendRequest(apiAddress);
+
+                                      },)
                                   ],
                                 ),
                               ),
@@ -155,5 +153,22 @@ class _CartState extends State<Cart> {
           )
       ),
     );
+  }
+
+  Future<void> SendRequest(String apiAddress) async
+  {
+      print(apiAddress);
+      var response = await http.get(Uri.parse(apiAddress));
+      print(response.body);
+      var data = json.decode(response.body);
+      print(data);
+      String error = data[0]['error'];
+      if(error !='no')
+        toast(error);
+      else
+        {
+          toast(data[1]['message']);
+
+        }
   }
 }
