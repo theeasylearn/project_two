@@ -102,7 +102,7 @@ class _CartState extends State<Cart> {
 
   Widget DisplayCartItems() {
     if (cart.length == 0) {
-      return Image.asset("empty_cart.png");
+      return Image.asset("assets/empty_cart.png");
     } else {
       return ListView.builder(
           itemCount: cart.length,
