@@ -12,13 +12,15 @@ import 'package:project_two/login.dart';
 import 'package:project_two/product.dart';
 import 'package:project_two/product_detail.dart';
 import 'package:project_two/register.dart';
+import 'package:project_two/row_column_example.dart';
 import 'package:project_two/wishlist.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:project_two/dashboard.dart';
 
 void  main() {
-  runApp(OverlaySupport.global(child: GetMaterialApp(home: HomeScreen())));
-  // runApp(OverlaySupport.global(child: GetMaterialApp(home: Dashboard())));
+  // runApp(OverlaySupport.global(child: GetMaterialApp(home: RowColumnExample())));
+   runApp(OverlaySupport.global(child: GetMaterialApp(home: HomeScreen())));
+  //runApp(OverlaySupport.global(child: GetMaterialApp(home: Dashboard())));
 
 }
 class HomeScreen extends StatelessWidget {
