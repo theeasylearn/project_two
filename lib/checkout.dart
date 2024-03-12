@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:http/http.dart' as http;
+import 'common_functions.dart';
 import 'custom_widget.dart';
 import 'dashboard.dart';
 
@@ -85,9 +86,12 @@ class _CheckoutState extends State<Checkout> {
       }
     });
 
-    storage.read(key: userid).then((value) {
+    storage.read(key: 'userid').then((value) async {
+      setState(() {
+        print('original value = $value');
         userid = value.toString();
-        print('userid = $userid feteched successfully.....');
+        print('userid = $userid fetched successfully.....');
+      });
     });
   }
   @override
@@ -195,10 +199,9 @@ class _CheckoutState extends State<Checkout> {
                     MaterialButton(
                       onPressed: () {
                         // Perform actions when the button is pressed, e.g., place order
-                        //bool isValid = isValidInput();
-                        // Add your logic for placing the order here
-                        //if(isValid == true)
-                            SendRequest();
+                        bool isValid = isValidInput();
+                        if(isValid == true)
+                          SendRequest();
                       },
                       color: Color(0xff6c164b),
                       child: Text(
@@ -256,7 +259,7 @@ class _CheckoutState extends State<Checkout> {
   }
 
   Future<void> SendRequest() async {
-    String apiAddress = "http://www.theeasylearnacademy.com/shop/ws/checkout.php";
+    String apiAddress = Common.getBase() + "checkout.php";
     Map<String, Object> form = new Map();
     form['fullname'] = fullname;
     form['address1'] = address1;
@@ -271,7 +274,7 @@ class _CheckoutState extends State<Checkout> {
     // Call the API
     try {
       var response = await http.post(Uri.parse(apiAddress), body: form);
-      print(response);
+      print(response.body);
 
       // Convert response into JSON
       try {

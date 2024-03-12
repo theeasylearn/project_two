@@ -145,7 +145,7 @@ class _RegisterState extends State<Register> {
 
   Future<void> SendRequest() async {
     String apiAddress =
-        "http://www.theeasylearnacademy.com/shop/ws/register.php";
+        "http://dholerasmartcities.in/shop/flutter_php/ws/register.php";
     Map<String, Object> form = new Map();
     form['email'] = email;
     form['password'] = password;

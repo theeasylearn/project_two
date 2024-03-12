@@ -64,7 +64,7 @@ class _ProductDetailState extends State<ProductDetail> {
           detail = data[2]['detail'];
           islive = data[2]['islive'];
           photo = data[2]['photo'];
-          sampleImages.insert(0, "https://theeasylearnacademy.com/shop/images/product/" + photo);
+          sampleImages.insert(0, "http://dholerasmartcities.in/shop/flutter_php/images/product/" + photo);
         });
     }
   }

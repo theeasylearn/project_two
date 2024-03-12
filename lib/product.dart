@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:project_two/product_detail.dart';
+
+import 'common_functions.dart';
 class Product extends StatefulWidget {
   @override
   State<Product> createState() => _ProductState();
@@ -27,7 +29,7 @@ class _ProductState extends State<Product>
   }
   Future<void> SendRequest(String? categoryid) async
   {
-    String ApiAddress = "http://www.theeasylearnacademy.com/shop/ws/product.php?categoryid=$categoryid";
+    String ApiAddress = Common.getBase() + "product.php?categoryid=$categoryid";
     print(ApiAddress);
     //call api
     var response = await http.get(Uri.parse(ApiAddress));

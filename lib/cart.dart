@@ -172,7 +172,7 @@ class _CartState extends State<Cart> {
                                       textColor: Colors.white,
                                       onPressed: () {
                                         String apiAddress =
-                                            "https://www.theeasylearnacademy.com/shop/ws/move_to_wishlist.php?usersid=" +
+                                            "http://dholerasmartcities.in/shop/flutter_php/ws/move_to_wishlist.php?usersid=" +
                                                 userid +
                                                 "&productid= " +
                                                 cart[index]['id'];
@@ -185,7 +185,7 @@ class _CartState extends State<Cart> {
                                       textColor: Colors.white,
                                       onPressed: () {
                                         String apiAddress =
-                                            "https://www.theeasylearnacademy.com/shop/ws/delete_from_cart.php?cartid=" +
+                                            "http://dholerasmartcities.in/shop/flutter_php/ws/delete_from_cart.php?cartid=" +
                                                 cart[index]['cartid'];
                                         SendRequest(apiAddress, index);
                                       },

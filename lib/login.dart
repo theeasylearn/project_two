@@ -6,6 +6,8 @@ import 'package:overlay_support/overlay_support.dart';
 import 'package:http/http.dart' as http;
 import 'package:project_two/dashboard.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import 'common_functions.dart';
 class Login extends StatefulWidget {
   @override
   State<Login> createState() => _LoginState();
@@ -131,8 +133,7 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> SendRequest(BuildContext context) async {
-    String ApiAddress = "https://www.theeasylearnacademy.com/shop/ws/login.php";
-
+    String ApiAddress = Common.getBase() + "login.php";
     var url = Uri.parse(ApiAddress);
     //api call
     try {
@@ -169,11 +170,11 @@ class _LoginState extends State<Login> {
                  }
             }
           }
-          catch(error)
-          {
-            print(error);
-            toast("oops, something went wrong, please contact administrator...");
-          }
+      catch(error)
+      {
+        print(error);
+        toast("oops, something went wrong, please contact administrator...");
+      }
     } catch (error) {
       toast("Internet is not available (networking error)");
       print(error);

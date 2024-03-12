@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:overlay_support/overlay_support.dart';
+import 'common_functions.dart';
 import 'custom_widget.dart';
 import 'dart:convert';
 import 'package:project_two/product.dart';
@@ -23,7 +24,7 @@ class _CategoryState extends State<Category> {
   }
 
   Future<void> SendRequest() async {
-    String ApiAddress = "http://www.theeasylearnacademy.com/shop/ws/category.php";
+    String ApiAddress = Common.getBase() + "category.php";
     var url = Uri.parse(ApiAddress);
     try
     {
