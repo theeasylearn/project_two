@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:overlay_support/overlay_support.dart';
+import 'package:project_two/checkout.dart';
 import 'custom_widget.dart';
 import 'common_functions.dart';
 import 'dart:convert';
@@ -51,26 +52,32 @@ class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomSheet: Container(
-        height: 75,
-        width: double.infinity,
-        color: Color(0xff6c164b),
-        child: Center(
-          child: Container(
-            height: 50,
-            width: 225,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                color: Color(0xfff6d2e8),
-                borderRadius: BorderRadius.circular(30)),
-            child: Text(
-              "Checkout ",
-              style: GoogleFonts.titilliumWeb(
-                  textStyle: TextStyle(
-                fontSize: 30,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              )),
+      bottomSheet: InkWell(
+        onTap: ()
+        {
+          Navigator.push(context,MaterialPageRoute(builder: (context) => new Checkout()));
+        },
+        child: Container(
+          height: 75,
+          width: double.infinity,
+          color: Color(0xff6c164b),
+          child: Center(
+            child: Container(
+              height: 50,
+              width: 225,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: Color(0xfff6d2e8),
+                  borderRadius: BorderRadius.circular(30)),
+              child: Text(
+                "Checkout ",
+                style: GoogleFonts.titilliumWeb(
+                    textStyle: TextStyle(
+                  fontSize: 30,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                )),
+              ),
             ),
           ),
         ),
@@ -117,7 +124,7 @@ class _CartState extends State<Cart> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Image.network(
-                          "https://theeasylearnacademy.com/shop/images/product/" +
+                          Common.getImageBase() + "product/" +
                               cart[index]['photo'],
                           fit: BoxFit.cover,
                           height: constraints
@@ -149,10 +156,7 @@ class _CartState extends State<Cart> {
                             ),
                             SizedBox(
                               width: constraints.maxWidth * 0.5,
-                              child: Text(cart[index]['detail']
-                                      .toString()
-                                      .substring(0, 100) +
-                                  "..."),
+                              child: Text(cart[index]['detail']),
                             ),
                             SizedBox(
                               height: 10,

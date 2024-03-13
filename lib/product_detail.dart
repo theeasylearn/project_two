@@ -36,7 +36,7 @@ class _ProductDetailState extends State<ProductDetail> {
   Future<void> FetchProductDetailFromServer() async
   {
     // api call
-    String ApiAddress = Common.getBase() + "?productid=$productid";
+    String ApiAddress = Common.getBase() + "product.php?productid=$productid";
     print(ApiAddress);
     var response = await http.get(Uri.parse(ApiAddress));
     print(response.body);
@@ -64,7 +64,7 @@ class _ProductDetailState extends State<ProductDetail> {
           detail = data[2]['detail'];
           islive = data[2]['islive'];
           photo = data[2]['photo'];
-          sampleImages.insert(0, "http://dholerasmartcities.in/shop/flutter_php/images/product/" + photo);
+          sampleImages.insert(0, Common.getImageBase() + "product/" + photo);
         });
     }
   }

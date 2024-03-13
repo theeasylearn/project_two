@@ -3,7 +3,14 @@ class ForgotPassword extends StatefulWidget {
   @override
   State<ForgotPassword> createState() => _ForgotPasswordState();
 }
+/*
+  http://dholerasmartcities.in/shop/ws/forgot_password.php?email=ankit3395@gmail.com
+  [{"error":"input is missing"}]
+  [{"error":"no"},{"success":"yes"},{"message":"please check email for password"}]
+  [{"error":"no"},{"success":"no"},{"message":"invalid email address"}]
+  if success is yes then display login screen & user should not be able to press back button
 
+ */
 class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {

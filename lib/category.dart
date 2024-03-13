@@ -95,7 +95,7 @@ class _CategoryState extends State<Category> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Expanded(child:
-                    Image.network("http://theeasylearnacademy.com/shop/images/category/" + categories[index]['photo']
+                    Image.network(Common.getImageBase() + "category/" + categories[index]['photo']
                     ,fit: BoxFit.cover,
                     )),
                     Container(

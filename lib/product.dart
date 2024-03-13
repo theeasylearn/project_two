@@ -84,7 +84,7 @@ class _ProductState extends State<Product>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                         Expanded(child:
-                        Image.network("http://www.theeasylearnacademy.com/shop/images/product/" + product[index]['photo'],
+                        Image.network( Common.getImageBase() + "product/" + product[index]['photo'],
                         fit: BoxFit.cover,)
                         ),
                         Padding(
@@ -94,6 +94,9 @@ class _ProductState extends State<Product>
                             children: [
                               MyText(product[index]['title']),
                               InkWell(
+                                onTap: () {
+                                  AddtoCart(product[index]['id']);
+                                },
                                 child: Icon(Icons.shopping_bag_outlined),
                               )
                             ],
@@ -112,5 +115,27 @@ class _ProductState extends State<Product>
         ],
       ),
     ),);
+  }
+  Future<void> AddtoCart(var productid) async {
+    storage.read(key: "userid").then((value) async {
+      print("AddtoCart value will be fetched from storage");
+      String apiAddress = Common.getBase() + "add_to_cart.php?productid=$productid&usersid=$value";
+      print(apiAddress);
+      var response = await http.get(Uri.parse(apiAddress));
+      print(response.body);
+      //convert it to json
+      var data = json.decode(response.body);
+      //create error variable
+      String error = data[0]['error'];
+      if(error !='no')
+      {
+        toast(error);
+      }
+      else
+      {
+        String message = data[1]['message'];
+        toast(message);
+      }
+    });
   }
 }

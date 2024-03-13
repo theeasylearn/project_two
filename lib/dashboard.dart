@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:project_two/cart.dart';
 import 'package:project_two/change_password.dart';
 import 'package:project_two/checkout.dart';
 import 'package:project_two/custom_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project_two/login.dart';
 import 'package:project_two/wishlist.dart';
 
 import 'category.dart';
 
 class Dashboard extends StatelessWidget {
+  FlutterSecureStorage storage = new FlutterSecureStorage();
   Dashboard({super.key});
   void _navigateToScreen(BuildContext context, Widget screen) {
     Navigator.push(
@@ -59,6 +63,11 @@ class Dashboard extends StatelessWidget {
                   PopupMenuItem(child: Text("Privacy policy")),
                   PopupMenuItem(child: Text("About us")),
                   PopupMenuItem(child: Text("Contact us")),
+                  PopupMenuItem(child: Text("Logout"),onTap: () {
+                    storage.write(key: 'userid', value: '-1');
+                    toast("Logout successfull");
+                    Get.offAll(Login());
+                  },),
                 ];
               },
               color: Colors.white,

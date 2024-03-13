@@ -7,6 +7,17 @@ class Wishlist extends StatefulWidget {
   @override
   State<Wishlist> createState() => _WishlistState();
 }
+//fllowing api should be called
+/*
+    get list of items from wishlist
+    http://dholerasmartcities.in/shop/ws/wishlist.php?usersid=1
+
+    delete from wishlist
+    http://dholerasmartcities.in/shop/ws/delete_from_wishlist.php?wishlistid=1
+
+    Move to cart
+    http://dholerasmartcities.in/shop/ws/move_to_wishlist.php?usersid=3&productid=1
+*/
 
 class _WishlistState extends State<Wishlist> {
   @override
